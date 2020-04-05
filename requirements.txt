@@ -1,0 +1,6 @@
+numpy==1.18.2
+pip -f https://download.pytorch.org/whl/torch_stable.html torch==1.4.0+cpu
+jupyter==1.0.0
+jupyter-contrib-nbextensions==0.5.1
+matplotlib==3.2.1
+scikit-learn==0.22.2
