@@ -19,12 +19,13 @@ class Node(dict):
     feature f and $a$ is the node's optimal threshold
     """
 
-    def __init__(self, **kwargs):
+    def __init__(self, y_ind=None, sample_weights=None, depth=None, **kwargs):
         super().__init__(**kwargs)
 
-        self["y_ind"] = None  # indices of the initial dataset corresponding to the node
-        self["sample_weights"] = None
-        self["depth"] = None
+        self["y_ind"] = y_ind  # indices of the initial dataset corresponding to the node
+        self["sample_weights"] = sample_weights
+        self["depth"] = depth
+        
         self["is_leaf"] = False
         self["feature_i"] = None
         self["split_value"] = None
