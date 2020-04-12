@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import numpy as np
 from sklearn.base import BaseEstimator, ClassifierMixin
+from sklearn.metrics import accuracy_score
 
 from cvxopt import matrix
 from cvxopt.solvers import qp
@@ -40,7 +41,7 @@ class SVC(BaseEstimator, ClassifierMixin):
         P = matrix(P)
         q = matrix(-np.ones((n_samples, 1)))
         G = matrix(np.concatenate((np.eye(n_samples), -np.eye(n_samples))))
-        h = matrix(np.concatenate((C * np.ones(n_samples), np.zeros(n_samples))))
+        h = matrix(np.concatenate((self.C * np.ones(n_samples), np.zeros(n_samples))))
         A = matrix(y[None, :])
         b = matrix(0.0)
 
