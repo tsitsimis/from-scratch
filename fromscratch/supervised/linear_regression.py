@@ -50,7 +50,7 @@ class LinearRegression:
         self.betas = np.linalg.inv(X_aug.T.dot(X_aug) + k * np.eye(n_features + 1)).dot(X_aug.T).dot(y)
 
         # R squared
-        self.rsquared = ((y - self.predict(X)) ** 2).sum() / ((y - np.mean(y)) ** 2).sum()
+        self.rsquared = 1 - ((y - self.predict(X)) ** 2).sum() / ((y - np.mean(y)) ** 2).sum()
 
         return self
 
