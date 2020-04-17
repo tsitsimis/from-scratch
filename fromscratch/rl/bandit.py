@@ -1,3 +1,5 @@
+from typing import Iterable
+
 import numpy as np
 
 
@@ -49,6 +51,7 @@ class Bandit:
         action : int
             Action index
         """
+        
         return self.action_values[action] + np.random.normal(0, 1)
 
     def update_estimate(self, action: int) -> float:
@@ -60,16 +63,42 @@ class Bandit:
         action : int
             Action index
         """
+
         reward = self.get_reward(action)
         self.action_values_est[action] += self.alpha * (reward - self.action_values_est[action])
         return reward
 
 
 class EpsilonGreedy:
+    """
+    Implements the ε-greedy policy
+
+    Parameters
+    ----------
+    epsilon : float
+        Exploration probability. With epsilon probability a random action is selected
+        instead of the currently optimal action
+
+    Methods
+    -------
+    select_action(action_values)
+        Returns an action based on current action value estimates and epsilon
+    """
+
     def __init__(self, epsilon):
         self.epsilon = epsilon
 
-    def select_action(self, action_values):
+    def select_action(self, action_values: Iterable):
+        """
+        select_action(action_values)
+        Returns an action based on current action value estimates and epsilon
+
+        Parameters
+        ----------
+        action_values : Iterable
+            Action values (true or estimates)
+        """
+
         if np.random.random() < self.epsilon:
             return np.random.randint(action_values.shape[0])
 
