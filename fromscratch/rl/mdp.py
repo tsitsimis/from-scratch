@@ -112,24 +112,29 @@ class ActionSpace:
             return self.name if self.name is not None else self.vector
 
 
-class GridWorld:
+class GridMDP:
     """
-    Implements a basic MDP with state space on a 2D grid
+    Generic MDP on grid state-space where allowed actions are going nort, south,
+    west or east.
 
     Parameters
     ----------
     rows : int
         Rows of the grid
+
     cols : int
         Columns of the grid
+
     goal : list
         Goal (terminal) states
     """
 
-    def __init__(self, rows: int, cols: int, goal: list):
+    def __init__(self, rows, cols, goal):
         self.rows = rows
         self.cols = cols
         self.goal = goal
+
+        self.state = None
 
         self.states = list(map(lambda x: State(list(x)), itertools.product(range(rows), range(cols))))
 
@@ -152,15 +157,7 @@ class GridWorld:
 
         self.state = None
 
-    def set_state(self, state):
-        """
-        Sets current MDP state. Returns self for method chaining
-        """
-
-        self.state = self.get_state(state)
-        return self
-
-    def get_state(self, state):
+    def find_state(self, state):
         """
         Returns a reference to the state of the MDP with the same feature vector
         as the one given as input
@@ -168,7 +165,61 @@ class GridWorld:
 
         if isinstance(state, np.ndarray):
             state = State(state)
-        return list(filter(lambda x: x == state, self.states))[0]
+        filtered_states = list(filter(lambda x: x == state, self.states))
+        if len(filtered_states) > 0:
+            return filtered_states[0]
+        return None
+
+    def set_state(self, state):
+        """
+        Sets current MDP state. Returns self for method chaining
+        """
+
+        state = self.find_state(state)
+        if state is not None:
+            self.state = state
+        else:
+            raise ValueError("State not found")
+        return self
+
+    def step(self, action, transition: bool = True):
+        raise NotImplementedError("step method must be implemented by inherited class")
+
+    def get_reward(self, action):
+        """
+        Implements the reward function base on the action performed
+        """
+
+        if self.state in self.goal:
+            return 0
+        else:
+            return -1
+
+
+class GridWorld(GridMDP):
+    """
+    Implements the Grid World environment
+
+    Parameters
+    ----------
+    rows : int
+        Rows of the grid
+
+    cols : int
+        Columns of the grid
+
+    goal : list
+        Goal (terminal) states
+
+    wind : numpy.ndarray
+        vector of vertical force (wind) applied to the agent in each state
+    """
+
+    def __init__(self, rows: int, cols: int, goal: list, wind: np.ndarray = None):
+        super().__init__(rows, cols, goal)
+        self.wind = wind
+        if wind is None:
+            self.wind = np.zeros(cols)
 
     def step(self, action, transition: bool = True):
         """
@@ -192,56 +243,48 @@ class GridWorld:
 
         new_vector = self.state.vector + action.vector
 
+        wind_vertical = self.wind[self.state.vector[1]]
+        new_vector = new_vector + np.array([wind_vertical, 0])
+
         new_state = State(np.array([
             np.clip(new_vector[0], 0, self.rows - 1),
             np.clip(new_vector[1], 0, self.cols - 1)
         ]))
 
         if transition:
-            self.state = self.get_state(new_state)
+            self.state = self.find_state(new_state)
 
-        return self.get_state(new_state), reward
+        return self.find_state(new_state), reward
 
-    def get_reward(self, action):
-        """
-        Implements the reward function base on the action performed
-        """
-
-        if self.state in self.goal:
-            return 0
-        else:
-            return -1
-
-    def plot(self, policy=None):
+    def plot(self, policy):
         """
         Visualizes the state space of the MDP and colors them according to their Value.
-        If given, it shows the policy actions as arrows on the grid
+        Also shows the policy actions as arrows on the grid
         """
 
-        values = np.array([policy.value[s] for s in self.states]).reshape((self.rows, self.cols))
+        values = np.array([policy.V[s] for s in self.states]).reshape((self.rows, self.cols))
         plt.imshow(values, cmap="Reds")
 
         for g in self.goal:
             plt.scatter([g.vector[1]], [g.vector[0]], facecolor="blue")
 
-        if policy is not None:
-            optimal_actions_inds = [
-                np.random.choice(range(len(s.allowed_actions)), p=list(policy.action_proba[s].values())) if len(
-                    s.allowed_actions) > 0 else None for s in self.states
-            ]
+        optimal_actions_inds = [
+            np.random.choice(range(len(s.allowed_actions)), p=list(policy.get_action_proba(s).values())) if len(
+                s.allowed_actions) > 0 else None for s in self.states
+        ]
 
-            optimal_actions = [
-                s.allowed_actions[i].name if i is not None else None for s, i in zip(self.states, optimal_actions_inds)
-            ]
+        optimal_actions = [
+            s.allowed_actions[i].name if i is not None else None for s, i in zip(self.states, optimal_actions_inds)
+        ]
 
-            dxdy = {
-                "north": [0, -0.4],
-                "south": [0, 0.4],
-                "east": [0.4, 0],
-                "west": [-0.4, 0],
-            }
-            [plt.arrow(s.vector[1], s.vector[0], dxdy[a][0], dxdy[a][1], head_width=0.1, head_length=0.1, fc='k', ec='k')
-             for s, a in zip(self.states, optimal_actions) if a is not None]
+        dxdy = {
+            "north": [0, -0.4],
+            "south": [0, 0.4],
+            "east": [0.4, 0],
+            "west": [-0.4, 0],
+        }
+        [plt.arrow(s.vector[1], s.vector[0], dxdy[a][0], dxdy[a][1], head_width=0.1, head_length=0.1, fc='k', ec='k')
+         for s, a in zip(self.states, optimal_actions) if a is not None]
 
         plt.title("Grid World")
         plt.show()
