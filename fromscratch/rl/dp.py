@@ -29,10 +29,9 @@ class PolicyEvaluation:
         current step
     """
 
-    def __init__(self, mdp, policy, gamma=0.9):
+    def __init__(self, mdp, policy):
         self.mdp = mdp
         self.policy = policy
-        self.gamma = gamma
 
     def evaluate_once(self) -> float:
         """
@@ -45,14 +44,14 @@ class PolicyEvaluation:
         for s in self.mdp.states:
             self.mdp.set_state(s)
 
-            state_value_prev = self.policy.value[s]
+            state_value_prev = self.policy.V[s]
 
             state_value = 0
             for a in s.allowed_actions:
                 s_next, r = self.mdp.step(a, transition=False)
-                state_value += self.policy.action_proba[s][a] * 1 * (r + self.gamma * self.policy.value[s_next])
+                state_value += self.policy.get_action_proba(s)[a] * 1 * (r + self.policy.gamma * self.policy.V[s_next])
 
-            self.policy.value[s] = state_value
+            self.policy.V[s] = state_value
             delta = np.max([delta, np.abs(state_value_prev - state_value)])
         return delta
 
@@ -80,10 +79,9 @@ class PolicyImprovement:
         have been made
     """
 
-    def __init__(self, mdp, policy, gamma=0.9):
+    def __init__(self, mdp, policy):
         self.mdp = mdp
         self.policy = policy
-        self.gamma = gamma
 
         self.policy_stable = True
 
@@ -105,7 +103,7 @@ class PolicyImprovement:
             values = np.empty(len(s.allowed_actions))
             for i, a in enumerate(s.allowed_actions):
                 s_next, r = self.mdp.step(a, transition=False)
-                values[i] = r + self.gamma * self.policy.value[s_next]
+                values[i] = r + self.policy.gamma * self.policy.V[s_next]
 
             action_proba = np.zeros(len(s.allowed_actions))
             action_proba[np.argmax(values)] = 1
@@ -141,13 +139,12 @@ class PolicyIteration:
             stable or maximum number of iterations is reached
         """
 
-    def __init__(self, mdp, policy, gamma=0.9):
+    def __init__(self, mdp, policy):
         self.mdp = mdp
         self.policy = policy
-        self.gamma = gamma
 
-        self.evaluator = PolicyEvaluation(mdp, policy, gamma)
-        self.improver = PolicyImprovement(mdp, policy, gamma)
+        self.evaluator = PolicyEvaluation(mdp, policy)
+        self.improver = PolicyImprovement(mdp, policy)
 
     def iterate(self, iterations: int = 10):
         """
