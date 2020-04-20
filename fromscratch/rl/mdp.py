@@ -286,3 +286,76 @@ class GridWorld(GridMDP):
 
         plt.title("Grid World")
         plt.show()
+
+
+class CliffWalking(GridMDP):
+    def __init__(self, rows: int, cols: int, goal: list):
+        super().__init__(rows, cols, goal)
+
+    def step(self, action, transition: bool = True):
+        if isinstance(action, str):
+            action = self.action_space.action(action)
+
+        reward = self.get_reward(action)
+
+        new_vector = self.state.vector + action.vector
+
+        if new_vector[0] == self.rows - 1 and 0 < new_vector[1] < self.cols - 1:
+            new_vector = np.array([self.rows - 1, 0])
+
+        new_state = State(np.array([
+            np.clip(new_vector[0], 0, self.rows - 1),
+            np.clip(new_vector[1], 0, self.cols - 1)
+        ]))
+
+        if transition:
+            self.state = self.find_state(new_state)
+
+        return self.find_state(new_state), reward
+
+    def get_reward(self, action):
+        """
+        Implements the reward function base on the action performed
+        """
+
+        if self.state in self.goal:
+            return 0
+        elif (self.state.vector + action.vector)[0] == self.rows - 1 and 0 < (self.state.vector + action.vector)[1] < self.cols - 1:
+            return -100
+        else:
+            return -1
+
+    def plot(self, policy):
+        """
+        Visualizes the state space of the MDP and colors them according to their Value.
+        Also shows the policy actions as arrows on the grid
+        """
+
+        values = np.array([policy.V[s] for s in self.states]).reshape((self.rows, self.cols))
+        plt.imshow(values, cmap="Reds")
+
+        plt.scatter(range(1, self.cols), [self.rows - 1] * (self.cols - 1), marker="x", c="grey")
+
+        for g in self.goal:
+            plt.scatter([g.vector[1]], [g.vector[0]], facecolor="blue")
+
+        optimal_actions_inds = [
+            np.random.choice(range(len(s.allowed_actions)), p=list(policy.get_action_proba(s).values()))
+            for s in self.states
+        ]
+
+        optimal_actions = [
+            s.allowed_actions[i].name for s, i in zip(self.states, optimal_actions_inds)
+        ]
+
+        dxdy = {
+            "north": [0, -0.4],
+            "south": [0, 0.4],
+            "east": [0.4, 0],
+            "west": [-0.4, 0],
+        }
+        [plt.arrow(s.vector[1], s.vector[0], dxdy[a][0], dxdy[a][1], head_width=0.1, head_length=0.1, fc='k', ec='k')
+         for s, a in zip(self.states, optimal_actions) if s not in self.goal and not (s.vector[0] == self.rows-1 and 0 < s.vector[1] < self.cols - 1)]
+
+        plt.title("Grid World")
+        plt.show()
