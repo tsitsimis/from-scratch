@@ -4,13 +4,14 @@ Implemented in Python from scratch targeting in minimal and clean code.
 
 ## Contents
 - Supervised Learning
-    - [Neural Networks](./fromscratch/supervised/neuralnetworks)
-    - [Classification Trees](./fromscratch/supervised/classification_tree.py)
-    - [AdaBoost](./fromscratch/supervised/adaboost.py)
-    - [Support Vector Machine](./fromscratch/supervised/svm_classifier.py)
-    - [Linear Regression](./fromscratch/supervised/linear_regression.py)
+    - Multi-layer Neural Networks [[example]](./examples/supervised/backpropagation.ipynb) [[code]](./fromscratch/supervised/neuralnetworks)
+    - Classification Trees [[example]](./examples/supervised/classification-tree.ipynb) [[code]](./fromscratch/supervised/classification_tree.py)
+    - Adaptive Boosting [[example]](./examples/supervised/adaboost.ipynb) [[code]](./fromscratch/supervised/adaboost.py)
+    - Support Vector Machine [[example]](./examples/supervised/svm-classifier.ipynb) [[code]](./fromscratch/supervised/svm_classifier.py)
+    - Linear Regression [[example]](./examples/supervised/linear-regression.ipynb) [[code]](./fromscratch/supervised/linear_regression.py)
 
 - Reinforcement Learning
-    - [N-armed Bandits](./fromscratch/rl/bandit.py)
-    - [Dynamic Programming](./fromscratch/rl/dp.py)
-
+    - N-armed Bandits [[example]](./examples/rl/n-armed-bandit.ipynb) [[code]](./fromscratch/rl/bandit.py)
+    - Dynamic Programming [[example]](./examples/rl/policy-iteration.ipynb) [[code]](./fromscratch/rl/dp.py)
+    - SARSA [[example]](./examples/rl/temporal-difference-learning.ipynb) [[code]](./fromscratch/rl/td_learning.py)
+    - Q-Learning [[example]](./examples/rl/temporal-difference-learning.ipynb) [[code]](./fromscratch/rl/td_learning.py)
