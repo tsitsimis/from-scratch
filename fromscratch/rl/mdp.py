@@ -146,8 +146,6 @@ class GridMDP:
         })
 
         for s in self.states:
-            if s in goal:
-                continue
             s.set_allowed_actions([
                 self.action_space.action("north"),
                 self.action_space.action("south"),
@@ -269,12 +267,12 @@ class GridWorld(GridMDP):
             plt.scatter([g.vector[1]], [g.vector[0]], facecolor="blue")
 
         optimal_actions_inds = [
-            np.random.choice(range(len(s.allowed_actions)), p=list(policy.get_action_proba(s).values())) if len(
-                s.allowed_actions) > 0 else None for s in self.states
+            np.random.choice(range(len(s.allowed_actions)), p=list(policy.get_action_proba(s).values()))
+            for s in self.states
         ]
 
         optimal_actions = [
-            s.allowed_actions[i].name if i is not None else None for s, i in zip(self.states, optimal_actions_inds)
+            s.allowed_actions[i].name for s, i in zip(self.states, optimal_actions_inds)
         ]
 
         dxdy = {
@@ -284,7 +282,7 @@ class GridWorld(GridMDP):
             "west": [-0.4, 0],
         }
         [plt.arrow(s.vector[1], s.vector[0], dxdy[a][0], dxdy[a][1], head_width=0.1, head_length=0.1, fc='k', ec='k')
-         for s, a in zip(self.states, optimal_actions) if a is not None]
+         for s, a in zip(self.states, optimal_actions) if s not in self.goal]
 
         plt.title("Grid World")
         plt.show()
