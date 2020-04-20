@@ -98,7 +98,7 @@ class PolicyImprovement:
 
             self.mdp.set_state(s)
 
-            a = self.policy.select_action(s)
+            a = self.policy.select_action()
 
             values = np.empty(len(s.allowed_actions))
             for i, a in enumerate(s.allowed_actions):
@@ -110,7 +110,7 @@ class PolicyImprovement:
 
             self.policy.update_action_proba(s, {a: p for a, p in zip(s.allowed_actions, action_proba)})
 
-            if a != self.policy.select_action(s):
+            if a != self.policy.select_action():
                 self.policy_stable = False
 
         return self.policy_stable
