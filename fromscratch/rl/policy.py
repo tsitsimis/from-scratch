@@ -55,20 +55,23 @@ class EpsilonGreedy:
         else:
             values = [self.Q[state][a] for a in state.allowed_actions]
 
-        argmax_ind = np.argwhere(values == np.amax(values)).flatten().tolist()
-        action_proba[np.random.choice(argmax_ind)] = 1 - self.epsilon + self.epsilon / n_actions
+        # argmax_ind = np.argwhere(values == np.amax(values)).flatten().tolist()
+        # action_proba[np.random.choice(argmax_ind)] = 1 - self.epsilon + self.epsilon / n_actions
+        action_proba[np.argmax(values)] = 1 - self.epsilon + self.epsilon / n_actions
         return {a: p for a, p in zip(state.allowed_actions, action_proba)}
 
-    def select_action(self, state):
+    def select_action(self):
         """
         Returns an action based on action probabilities of the state
         """
+
+        state = self.mdp.state
 
         if len(state.allowed_actions) == 0:
             return None
 
         action_proba = self.get_action_proba(state)
-        return np.random.choice(state.allowed_actions, p=action_proba)
+        return np.random.choice(state.allowed_actions, p=list(action_proba.values()))
 
     def reset(self):
         """
@@ -113,15 +116,12 @@ class GenericPolicy:
     def get_action_proba(self, state):
         return self.action_proba[state]
 
-    def select_action(self, state):
+    def select_action(self):
         """
         Returns an action (Action instance) based on action probabilities of the state
-
-        Parameters
-        ----------
-        state
-            State of the MDP
         """
+
+        state = self.mdp.state
 
         if len(state.allowed_actions) == 0:
             return None
