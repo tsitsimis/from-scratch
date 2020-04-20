@@ -28,6 +28,8 @@ class SARSA:
         self.policy = policy
         self.lr = lr
 
+        self.episode_reward = None
+
     def play_episodes(self, n=100):
         """
         Iterates n episodes of the SARSA TD control. In each episode the state-action value
@@ -39,17 +41,27 @@ class SARSA:
             Number of episodes to play
         """
 
+        if self.episode_reward is None:
+            self.episode_reward = np.empty(n)
+            i0 = 0
+        else:
+            i0 = self.episode_reward.shape[0]
+            self.episode_reward = np.concatenate((self.episode_reward, np.empty(n)))
+
         for i in range(n):
             self.mdp.set_state(np.random.choice(self.mdp.states))
 
             state = self.mdp.state
             if state in self.mdp.goal:
+                self.episode_reward[i + i0] = None
                 continue
 
             action = self.policy.select_action()
 
+            total_reward = 0
             while True:
                 state_next, reward = self.mdp.step(action, transition=True)
+                total_reward += reward
                 if state_next in self.mdp.goal:
                     break
 
@@ -61,6 +73,8 @@ class SARSA:
 
                 state = state_next
                 action = action_next
+
+            self.episode_reward[i + i0] = total_reward
 
 
 class QLearning:
@@ -90,6 +104,8 @@ class QLearning:
         self.policy = policy
         self.lr = lr
 
+        self.episode_reward = None
+
     def play_episodes(self, n=100):
         """
         Iterates n episodes of the Q-Learning TD control. In each episode the state-action value
@@ -100,16 +116,27 @@ class QLearning:
         n : int
             Number of episodes to play
         """
+
+        if self.episode_reward is None:
+            self.episode_reward = np.empty(n)
+            i0 = 0
+        else:
+            i0 = self.episode_reward.shape[0]
+            self.episode_reward = np.concatenate((self.episode_reward, np.empty(n)))
+
         for i in range(n):
             self.mdp.set_state(np.random.choice(self.mdp.states))
 
             state = self.mdp.state
             if state in self.mdp.goal:
+                self.episode_reward[i + i0] = None
                 continue
 
+            total_reward = 0
             while True:
                 action = self.policy.select_action()
                 state_next, reward = self.mdp.step(action, transition=True)
+                total_reward += reward
                 if state_next in self.mdp.goal:
                     break
 
@@ -119,3 +146,5 @@ class QLearning:
                         self.policy.Q[state][action])
 
                 state = state_next
+
+            self.episode_reward[i + i0] = total_reward
