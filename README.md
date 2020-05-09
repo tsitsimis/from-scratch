@@ -2,7 +2,7 @@
 A collection of algorithms and experiments touching various areas of Machine Learning and its related fields. 
 Implemented in Python from scratch targeting in minimal and clean code.
 
-## Contents
+## Implementations
 - Supervised Learning
     - Multi-layer Neural Networks [[demo]](./examples/supervised/backpropagation.ipynb) [[code]](./fromscratch/supervised/neuralnetworks)
     - Classification Trees [[demo]](./examples/supervised/classification-tree.ipynb) [[code]](./fromscratch/supervised/classification_tree.py)
@@ -18,3 +18,7 @@ Implemented in Python from scratch targeting in minimal and clean code.
     - Dynamic Programming [[demo]](./examples/rl/policy-iteration.ipynb) [[code]](./fromscratch/rl/dp.py)
     - SARSA [[demo]](./examples/rl/temporal-difference-learning.ipynb) [[code]](./fromscratch/rl/td_learning.py)
     - Q-Learning [[demo]](./examples/rl/temporal-difference-learning.ipynb) [[code]](./fromscratch/rl/td_learning.py)
+
+## Dependencies
+- numpy
+- cvxopt
