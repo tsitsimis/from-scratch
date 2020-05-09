@@ -10,6 +10,9 @@ Implemented in Python from scratch targeting in minimal and clean code.
     - Support Vector Machine [[example]](./examples/supervised/svm-classifier.ipynb) [[code]](./fromscratch/supervised/svm_classifier.py)
     - Linear Regression [[example]](./examples/supervised/linear-regression.ipynb) [[code]](./fromscratch/supervised/linear_regression.py)
 
+- Unsupervised Learning
+    - K-means [[example]](./examples/unsupervised/kmeans.ipynb) [[code]](./fromscratch/unsupervised/kmeans.py)
+
 - Reinforcement Learning
     - N-armed Bandits [[example]](./examples/rl/n-armed-bandit.ipynb) [[code]](./fromscratch/rl/bandit.py)
     - Dynamic Programming [[example]](./examples/rl/policy-iteration.ipynb) [[code]](./fromscratch/rl/dp.py)
