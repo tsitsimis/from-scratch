@@ -49,7 +49,7 @@ class DBSCAN:
              Data table with samples to be clustered
         """
 
-        self.m = 0
+        self.m = 0  # Number of clusters
         self.cluster = np.array([None] * X.shape[0])
         self.kdtree = KDTree(X)
 
