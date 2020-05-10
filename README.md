@@ -12,6 +12,7 @@ Implemented in Python from scratch targeting in minimal and clean code.
 
 - Unsupervised Learning
     - K-means [[demo]](./examples/unsupervised/kmeans.ipynb) [[code]](./fromscratch/unsupervised/kmeans.py)
+    - DBSCAN [[demo]](./examples/unsupervised/dbscan.ipynb) [[code]](./fromscratch/unsupervised/dbscan.py)
 
 - Reinforcement Learning
     - N-armed Bandits [[demo]](./examples/rl/n-armed-bandit.ipynb) [[code]](./fromscratch/rl/bandit.py)
@@ -20,5 +21,6 @@ Implemented in Python from scratch targeting in minimal and clean code.
     - Q-Learning [[demo]](./examples/rl/temporal-difference-learning.ipynb) [[code]](./fromscratch/rl/td_learning.py)
 
 ## Dependencies
-- numpy
-- cvxopt
+- **numpy**: Used in all implementations for vector/matrix operations and vectorized calculations
+- **cvxopt**: Used in SVM for solving the quadratic programming problem
+- **scipy**: Borrowed its KDTree implementation for fast nearest neighbours calculation
