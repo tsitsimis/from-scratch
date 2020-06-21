@@ -1,6 +1,12 @@
 # From Scratch
-A collection of algorithms and experiments touching various areas of Machine Learning and its related fields. 
-Implemented in Python from scratch targeting in minimal and clean code.
+A collection of Machine Learning algorithms implemented in Python from scratch targeting in minimal and clean code.
+
+## Motivation
+Transforming an algorithm from math equations to code is a sometimes difficult but always fruitful journey every 
+Data Scientist should take at least once. The goal of this project is to go down to the last detail of each
+algorithm, fill the gap between math and code, demystify ML models complexity and revisit their 
+mathematical background.
+
 
 ## Implementations
 - Supervised Learning
@@ -13,7 +19,7 @@ Implemented in Python from scratch targeting in minimal and clean code.
 - Unsupervised Learning
     - K-means [[demo]](./examples/unsupervised/kmeans.ipynb) [[code]](./fromscratch/unsupervised/kmeans.py)
     - DBSCAN [[demo]](./examples/unsupervised/dbscan.ipynb) [[code]](./fromscratch/unsupervised/dbscan.py)
-    - PCA [[demo]](./examples/unsupervised/pca.ipynb) [[code]](./fromscratch/unsupervised/pca.py)
+    - Principal Component Analysis (PCA) [[demo]](./examples/unsupervised/pca.ipynb) [[code]](./fromscratch/unsupervised/pca.py)
 
 - Reinforcement Learning
     - N-armed Bandits [[demo]](./examples/rl/n-armed-bandit.ipynb) [[code]](./fromscratch/rl/bandit.py)
