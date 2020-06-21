@@ -13,6 +13,7 @@ Implemented in Python from scratch targeting in minimal and clean code.
 - Unsupervised Learning
     - K-means [[demo]](./examples/unsupervised/kmeans.ipynb) [[code]](./fromscratch/unsupervised/kmeans.py)
     - DBSCAN [[demo]](./examples/unsupervised/dbscan.ipynb) [[code]](./fromscratch/unsupervised/dbscan.py)
+    - PCA [[demo]](./examples/unsupervised/pca.ipynb) [[code]](./fromscratch/unsupervised/pca.py)
 
 - Reinforcement Learning
     - N-armed Bandits [[demo]](./examples/rl/n-armed-bandit.ipynb) [[code]](./fromscratch/rl/bandit.py)
