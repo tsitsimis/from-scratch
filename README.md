@@ -102,5 +102,9 @@ Fead-forward Neural Network
 #### Dynamic Programming
 ![](./assets/dp-gridworld.png)
 
-#### SARSA
+#### Q-Learning
 ![](./assets/qlearning-gridworld.png) ![](./assets/qlearning-reward.png)
+
+
+#### SARSA
+![](./assets/sarsa-gridworld.png) ![](./assets/sarsa-reward.png)
