@@ -31,3 +31,76 @@ mathematical background.
 - **numpy**: Used in all implementations for vector/matrix operations and vectorized calculations
 - **cvxopt**: Used in SVM for solving the quadratic programming problem
 - **scipy**: Borrowed its KDTree implementation for fast nearest neighbours calculation
+
+## Demos
+Each algorithm is accompanied with a notebook with
+mathematical background, application of the methodology
+on toy datasets and intuitive visualizations.
+
+### Supervised Learning
+#### Multi-layer Neural Networks
+
+```
+Fead-forward Neural Network
+---------------------------
+4 layers: [10, 10, 10, 1]
+
+       Inputs
+       \ | /
+ o o o o o o o o o o 
+       \ | /
+ o o o o o o o o o o 
+       \ | /
+ o o o o o o o o o o 
+          | 
+          o 
+       Outputs
+```
+
+![](./assets/nn-regression.png)![](./assets/nn-classification.png)
+
+#### Classification Trees
+![](./assets/tree.png)
+```
+{'expr': 'feature_2 <= 2.45',
+ 'no': {'expr': 'feature_3 <= 1.75',
+        'no': {'expr': 'feature_2 <= 4.85',
+               'no': {'label': 2.0},
+               'yes': {'label': 2.0}},
+        'yes': {'expr': 'feature_2 <= 4.95',
+                'no': {'label': 2.0},
+                'yes': {'label': 1.0}}},
+ 'yes': {'expr': 'feature_0 <= 4.35',
+         'no': {'expr': 'feature_0 <= 4.45',
+                'no': {'label': 0.0},
+                'yes': {'label': 0.0}},
+         'yes': {'label': 0.0}}}
+```
+
+#### Support Vector Machine
+![](./assets/svm.png)
+
+#### Linear Regression
+![](./assets/lin_reg.png)
+
+
+### Unsupervised Learning
+#### K-means
+![](./assets/kmeans.png)
+
+#### DBSCAN
+![](./assets/dbscan.gif)
+
+#### Principal Component Analysis (PCA)
+![](./assets/pca1.png) ![](./assets/pca2.png)
+
+### Reinforcement Learning
+#### N-armed Bandits
+![](./assets/n_armed_bandits.png)
+
+
+#### Dynamic Programming
+![](./assets/dp-gridworld.png)
+
+#### SARSA
+![](./assets/qlearning-gridworld.png) ![](./assets/qlearning-reward.png)
