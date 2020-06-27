@@ -57,7 +57,7 @@ Fead-forward Neural Network
        Outputs
 ```
 
-![](./assets/nn-regression.png)![](./assets/nn-classification.png)
+![](./assets/nn-classification-regression.png)
 
 #### Classification Trees
 ![](./assets/tree.png)
