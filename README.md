@@ -1,5 +1,5 @@
 # From Scratch
-A collection of Machine Learning algorithms implemented in Python from scratch targeting in minimal and clean code.
+A collection of Machine Learning algorithms implemented in Python from scratch.
 
 ## Motivation
 Transforming an algorithm from math equations to code is a sometimes difficult but always fruitful journey every 
