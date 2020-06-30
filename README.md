@@ -35,7 +35,7 @@ mathematical background.
 ## Demos
 Each algorithm is accompanied with a notebook with
 mathematical background, application of the methodology
-on toy datasets and intuitive visualizations.
+on toy datasets and visualizations.
 
 ### Supervised Learning
 #### Multi-layer Neural Networks
