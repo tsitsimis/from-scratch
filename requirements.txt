@@ -1,4 +1,4 @@
-numpy==1.18.2
+numpy==1.22.0
 pip -f https://download.pytorch.org/whl/torch_stable.html torch==1.4.0+cpu
 jupyter==1.0.0
 jupyter-contrib-nbextensions==0.5.1
